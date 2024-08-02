@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/url"
-	ZeewUtils "zeew/utils"
+	ZeewUtils "github.com/Oscar-Dev0/zeew-api-go/utils"
 )
 
 type Card struct {
