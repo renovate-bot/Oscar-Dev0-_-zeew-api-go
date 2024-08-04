@@ -8,6 +8,8 @@ const (
 	ErrorMarshallingJson = "Error marshalling JSON"
 	ErrorUnmarshallingJson = "Error unmarshalling JSON"
 	ErrorRequestingImage = "Error requesting image"
+    InvalidImage = "Invalid image"
+    RequestError = "Request error"
 )
 
 

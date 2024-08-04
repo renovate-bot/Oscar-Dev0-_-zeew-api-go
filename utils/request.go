@@ -1,41 +1,44 @@
 package ZeewUtils
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 )
 
-func Request[T any](url string, token string) (T, error) {
-	var result T
+type Response struct {
+	Status   string `json:"status"`
+	Message  string `json:"mensaje"`
+	Endpoint string `json:"endpoint"`
+}
 
-	req, err := http.NewRequest("GET", url, nil)
+func Request(url string, token string) (*bytes.Buffer, error) {
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/%s", INT, url), nil)
 	if err != nil {
-		return result, err
+		return nil, err
 	}
 
-	// Establecer el encabezado de autorización
-	req.Header.Set("Authorization", "token "+token)
+	req.Header.Set("token", token)
 
-	// Realizar la solicitud
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		return result, err
+		return nil, err
 	}
 	defer resp.Body.Close()
 
-	// Leer la respuesta
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return result, err
+		return nil, err
 	}
 
-	// Deserializar la respuesta en el tipo T
-	err = json.Unmarshal(body, &result)
-	if err != nil {
-		return result, err
+	var res Response
+	err = json.Unmarshal(body, &res)
+	if err == nil && res.Message != "" {
+		return nil, fmt.Errorf("error en la solicitud: %s", res.Message)
 	}
 
-	return result, nil
+	return bytes.NewBuffer(body), nil;
 }

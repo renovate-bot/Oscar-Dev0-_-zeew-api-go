@@ -10,16 +10,16 @@ const (
 )
 
 type Bienvenida struct {
-	Token       string
-	Tit         string
-	ColorTit    string
-	ColorDesc   string
-	Desc        string
-	Avatar      string
-	Fondo       string
-	Estilo      string
-	ColorCircle string
-	Font        string
+	Token       string           `json:"token"`
+	Tit         string           `json:"tit"`
+	ColorTit    string           `json:"colortit"`
+	ColorDesc   string           `json:"colordesc"`
+	Desc        string           `json:"desc"`
+	Avatar      string           `json:"avatar"`
+	Fondo       string           `json:"fondo"`
+	Estilo      BienvenidaEstilo `json:"estilo"`
+	ColorCircle string           `json:"colorCircle"`
+	Font        string           `json:"font"`
 }
 
 func NewBienvenida(token string) *Bienvenida {
@@ -69,7 +69,7 @@ func (b *Bienvenida) SetFondo(fondo string) *Bienvenida {
 	return b
 }
 
-func (b *Bienvenida) SetEstilo(estilo string) *Bienvenida {
+func (b *Bienvenida) SetEstilo(estilo BienvenidaEstilo) *Bienvenida {
 	b.Estilo = estilo
 	return b
 }
